@@ -176,6 +176,10 @@ main { max-width: 1200px; margin: 0 auto; padding: 1rem 16px 5rem; }
     var(--gradient) border-box;
 }
 
+/* The trainer's card stays first and doesn't take a rank */
+.card.host { order: -1; border-color: var(--neon-purple); }
+.card.host .rank { color: var(--neon-purple); letter-spacing: 0.12em; }
+
 .rank {
   position: absolute;
   top: 0.85rem;

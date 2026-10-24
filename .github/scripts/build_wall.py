@@ -3,6 +3,7 @@
 Usage: python3 .github/scripts/build_wall.py [output_dir]
 """
 import json
+import os
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -27,6 +28,8 @@ def joined_at(path):
 
 def main():
     out_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT
+    # The repository owner is the trainer: their card is shown apart and doesn't take a rank.
+    trainer = os.environ.get("TRAINER", "").lower()
     participants = []
     for path in sorted((ROOT / "participants").glob("*.json")):
         username = path.stem
@@ -34,7 +37,7 @@ def main():
         if not USERNAME_RE.match(username) or errors:
             print(f"skipping {path.name}: {errors or 'invalid username'}")
             continue
-        participants.append({"username": username, **card, "joined": joined_at(path)})
+        participants.append({"username": username, **card, "joined": joined_at(path), "trainer": username == trainer})
 
     participants.sort(key=lambda p: (p["joined"], p["username"]))
     out_dir.mkdir(parents=True, exist_ok=True)

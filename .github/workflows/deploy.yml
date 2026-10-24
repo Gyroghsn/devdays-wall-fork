@@ -26,6 +26,8 @@ jobs:
           fetch-depth: 0 # full history, to know when each participant joined
 
       - name: Build the site
+        env:
+          TRAINER: ${{ github.repository_owner }}
         run: |
           mkdir _site
           cp -r index.html assets _site/

@@ -99,7 +99,9 @@ def review_card(file):
              "This pull request will update itself and I'll check it again. 💪")
 
     is_new = file["status"] == "added"
-    number = len(list((ROOT / "participants").glob("*.json"))) + (1 if is_new else 0)
+    # The trainer's card (repository owner) doesn't count as a contributor
+    cards = [p for p in (ROOT / "participants").glob("*.json") if p.stem != OWNER.lower()]
+    number = len(cards) + (1 if is_new else 0)
     merge()
     if is_new:
         say(f"## 🎉 Welcome to the wall, @{AUTHOR}!\n\n"

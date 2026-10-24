@@ -26,11 +26,13 @@ function el(tag, className, text) {
   return node;
 }
 
+// `index` is the contributor's position (0-based), or null for the trainer's card.
 function buildCard(p, index) {
-  const card = el("li", index < 3 ? "card top" : "card");
+  const trainer = index === null;
+  const card = el("li", trainer ? "card host" : index < 3 ? "card top" : "card");
 
-  const rank = el("span", "rank", `#${String(index + 1).padStart(2, "0")}`);
-  rank.title = `Contributor #${index + 1}`;
+  const rank = el("span", "rank", trainer ? "TRAINER" : `#${String(index + 1).padStart(2, "0")}`);
+  if (!trainer) rank.title = `Contributor #${index + 1}`;
 
   const avatar = el("img", "avatar");
   avatar.src = `https://github.com/${encodeURIComponent(p.username)}.png?size=176`;
@@ -73,20 +75,21 @@ async function load() {
     return;
   }
 
-  participants.forEach((p, index) => {
+  const contributors = participants.filter((p) => !p.trainer);
+  participants.forEach((p) => {
     if (seen.has(p.username)) return;
     seen.add(p.username);
-    const card = buildCard(p, index);
+    const card = buildCard(p, p.trainer ? null : contributors.indexOf(p));
     wall.prepend(card); // newest first, so new arrivals show up at the top of the projector
-    if (!firstLoad) {
+    if (!firstLoad && !p.trainer) {
       card.classList.add("new");
       celebrate(p);
     }
   });
 
-  empty.hidden = participants.length > 0;
-  count.textContent = participants.length;
-  latest.textContent = participants.length ? `@${participants[participants.length - 1].username}` : "—";
+  empty.hidden = contributors.length > 0;
+  count.textContent = contributors.length;
+  latest.textContent = contributors.length ? `@${contributors[contributors.length - 1].username}` : "—";
   firstLoad = false;
 }
 
