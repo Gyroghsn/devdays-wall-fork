@@ -1,0 +1,39 @@
+name: Deploy the wall
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # started by the Welcome Bot after each merge
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history, to know when each participant joined
+
+      - name: Build the site
+        run: |
+          mkdir _site
+          cp -r index.html assets _site/
+          python3 .github/scripts/build_wall.py _site
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

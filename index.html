@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dev Days Wall of Fame</title>
+  <meta name="description" content="Every card on this wall arrived through a real pull request.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎉</text></svg>">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="hero">
+    <p class="eyebrow">GitHub Dev Days · Master your projects with Git &amp; GitHub</p>
+    <h1>Wall of Fame</h1>
+    <p class="tagline">Every card on this wall arrived through a real pull request.</p>
+    <div class="stats">
+      <div class="stat"><span id="count">0</span><small>contributors</small></div>
+      <div class="stat"><span id="latest">—</span><small>latest arrival</small></div>
+    </div>
+    <a id="join" class="join" href="MISSIONS.md">Want your card here? Start the missions →</a>
+  </header>
+
+  <main>
+    <p id="empty" class="empty" hidden>The wall is empty… be the first to get here 🥇</p>
+    <ol id="wall" class="wall"></ol>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
+  <script src="assets/app.js" defer></script>
+</body>
+</html>
