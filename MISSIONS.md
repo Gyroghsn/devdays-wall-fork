@@ -67,8 +67,18 @@ git branch          # the * shows the branch you're on
 
 ## Mission 4: Create your card (20 pts)
 
-Create the file `participants/<you>.json`. The name must be **exactly your GitHub username, in lowercase**.
-Copy this and make it yours:
+Make a **copy** of the trainer's card, named after **your GitHub username, in lowercase**:
+
+```bash
+cp participants/hadeelhs.json participants/<you>.json
+```
+
+> 💡 Prefer clicking? In VS Code, right-click `hadeelhs.json` → **Copy**, right-click the `participants` folder → **Paste**,
+> then right-click the copy → **Rename** to `<you>.json`.
+
+> ⚠️ Copy it, don't rename or edit `hadeelhs.json`, or the trainer's card disappears from the wall!
+
+Open **your** file and replace the content with your own:
 
 ```json
 {

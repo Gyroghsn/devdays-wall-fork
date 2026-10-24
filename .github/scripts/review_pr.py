@@ -137,10 +137,24 @@ def main():
     names = [f["filename"] for f in files]
     expected = card_path(AUTHOR)
 
-    if names == [expected] and files[0]["status"] != "removed":
+    if names == [expected] and files[0]["status"] == "renamed":
+        original = files[0]["previous_filename"]
+        fail(f"## ✋ Copy, don't rename, @{AUTHOR}\n\nYou renamed `{original}`, "
+             "so that card would disappear from the wall. Your own card is fine, just bring the original back:\n\n"
+             f"```bash\ngit restore --source=main {original}\ngit add {original}\n"
+             "git commit -m \"Restore the trainer's card\"\ngit push\n```")
+    elif names == [expected] and files[0]["status"] != "removed":
         review_card(files[0])
     elif names == [QUIZ_FILE]:
         review_quiz(files[0])
+    elif len(names) == 1 and names[0].startswith("participants/") and files[0]["status"] != "added":
+        # They edited or renamed an existing card instead of copying it
+        other = files[0].get("previous_filename", names[0])
+        moved = f"mv {names[0]} {expected}" if names[0] != other else f"cp {other} {expected}"
+        fail(f"## ✋ That's someone else's card, @{AUTHOR}\n\nYou changed `{other}`. "
+             f"Make your own card named **`{expected}`**, then put the original back:\n\n"
+             f"```bash\n{moved}\ngit restore --source=main {other}\ngit add participants\n```\n\n"
+             f"Then edit **`{expected}`** with your info, `git add` it, `git commit` and `git push`.")
     elif len(names) == 1 and names[0].startswith("participants/"):
         fail(f"## 📛 Wrong file name, @{AUTHOR}\n\nYour card must be named after your GitHub username, in lowercase:\n\n"
              f"**`{expected}`** (yours is `{names[0]}`)\n\nRename it with:\n\n"
