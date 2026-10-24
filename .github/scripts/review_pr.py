@@ -103,7 +103,7 @@ def review_card(file):
     merge()
     if is_new:
         say(f"## 🎉 Welcome to the wall, @{AUTHOR}!\n\n"
-            f"{card['emoji']} **{card['name']}** from {card['city']} is contributor **#{number}**.\n\n"
+            f"**{card['name']}** from {card['city']} is contributor **#{number}**.\n\n"
             f"I checked your pull request and merged it. Your card appears on the wall in about a minute: {SITE}\n\n"
             "**What you just did:** fork → clone → branch → commit → push → pull request → merge. "
             "That's the real open-source workflow. 🏆\n\n"

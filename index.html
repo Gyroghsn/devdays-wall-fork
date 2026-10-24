@@ -5,23 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dev Days Wall of Fame</title>
   <meta name="description" content="Every card on this wall arrived through a real pull request.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎉</text></svg>">
+  <link rel="icon" type="image/svg+xml" href="assets/github-mark-white.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
   <header class="hero">
-    <p class="eyebrow">GitHub Dev Days · Master your projects with Git &amp; GitHub</p>
+    <!-- Official, unmodified artwork from https://brand.github.com/GitHub_Logos.zip -->
+    <img class="hero-logo" src="assets/github-mark-white.svg" alt="GitHub">
+    <p class="hero-badge">GitHub Dev Days · Master your projects with Git &amp; GitHub</p>
     <h1>Wall of Fame</h1>
-    <p class="tagline">Every card on this wall arrived through a real pull request.</p>
+    <p class="hero-subtitle">Every card on this wall arrived through a real pull request.</p>
+
     <div class="stats">
-      <div class="stat"><span id="count">0</span><small>contributors</small></div>
-      <div class="stat"><span id="latest">—</span><small>latest arrival</small></div>
+      <div class="stat"><span class="stat-value" id="count">0</span><span class="stat-label">contributors</span></div>
+      <div class="stat"><span class="stat-value" id="latest">—</span><span class="stat-label">latest merge</span></div>
     </div>
-    <a id="join" class="join" href="MISSIONS.md">Want your card here? Start the missions →</a>
+
+    <a id="join" class="cta" href="MISSIONS.md">
+      <code><span class="prompt">$</span> git push origin add-<span class="you">&lt;you&gt;</span></code>
+      <span class="cta-label">Join the wall →</span>
+    </a>
   </header>
 
   <main>
-    <p id="empty" class="empty" hidden>The wall is empty… be the first to get here 🥇</p>
+    <p id="empty" class="empty" hidden>The wall is empty. Be the first to merge.</p>
     <ol id="wall" class="wall"></ol>
   </main>
 

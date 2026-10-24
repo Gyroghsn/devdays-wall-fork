@@ -3,7 +3,7 @@ import json
 import re
 
 # Allowed fields and their maximum length.
-FIELDS = {"name": 40, "city": 40, "emoji": 8, "fun_fact": 140}
+FIELDS = {"name": 40, "city": 40, "fun_fact": 140}
 
 QUIZ_FILE = "quiz/answers.md"
 USERNAME_RE = re.compile(r"^[a-z0-9](?:[a-z0-9-]{0,38})$")
@@ -12,7 +12,6 @@ EXAMPLE = """```json
 {
   "name": "Sarah",
   "city": "Sfax",
-  "emoji": "🚀",
   "fun_fact": "I once fixed a bug by deleting a semicolon"
 }
 ```"""

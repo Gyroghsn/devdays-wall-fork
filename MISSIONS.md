@@ -74,12 +74,11 @@ Copy this and make it yours:
 {
   "name": "Sarah",
   "city": "Sfax",
-  "emoji": "🚀",
   "fun_fact": "I once fixed a bug by deleting a semicolon"
 }
 ```
 
-Rules: keep the 4 fields, use double quotes `"`, put a comma after every line except the last one.
+Rules: keep the 3 fields, use double quotes `"`, put a comma after every line except the last one.
 `fun_fact` can be up to 140 characters.
 
 ## Mission 5: Commit (20 pts)

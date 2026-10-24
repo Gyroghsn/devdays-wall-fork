@@ -1,6 +1,6 @@
 // Polls participants.json and adds new cards to the wall as pull requests get merged.
 const POLL_MS = 15000;
-const MEDALS = ["🥇", "🥈", "🥉"];
+const NEON = ["#00f5ff", "#ff00ff", "#b366ff"];
 
 const wall = document.getElementById("wall");
 const empty = document.getElementById("empty");
@@ -27,36 +27,37 @@ function el(tag, className, text) {
 }
 
 function buildCard(p, index) {
-  const card = el("li", "card");
+  const card = el("li", index < 3 ? "card top" : "card");
 
-  const rank = el("span", index < 3 ? "rank medal" : "rank", index < 3 ? MEDALS[index] : `#${index + 1}`);
+  const rank = el("span", "rank", `#${String(index + 1).padStart(2, "0")}`);
   rank.title = `Contributor #${index + 1}`;
 
-  const avatarWrap = el("div", "avatar-wrap");
   const avatar = el("img", "avatar");
-  avatar.src = `https://github.com/${encodeURIComponent(p.username)}.png?size=168`;
+  avatar.src = `https://github.com/${encodeURIComponent(p.username)}.png?size=176`;
   avatar.alt = "";
   avatar.loading = "lazy";
-  avatar.onerror = () => { avatar.style.visibility = "hidden"; };
-  avatarWrap.append(avatar, el("span", "emoji", p.emoji));
+  avatar.onerror = () => { avatar.removeAttribute("src"); };
 
   const username = el("a", "username", `@${p.username}`);
   username.href = `https://github.com/${encodeURIComponent(p.username)}`;
   username.target = "_blank";
   username.rel = "noopener";
 
-  card.append(rank, avatarWrap, el("h2", "name", p.name), username,
-    el("p", "city", `📍 ${p.city}`), el("p", "fact", p.fun_fact));
+  card.append(rank, avatar, el("h2", "name", p.name), username,
+    el("p", "city", p.city), el("p", "fact", p.fun_fact));
   return card;
 }
 
 function celebrate(p) {
-  toast.textContent = `🎉 ${p.name} just joined the wall!`;
+  toast.replaceChildren(
+    el("span", "ok", "✓ "), `@${p.username} merged `,
+    el("span", "branch", `add-${p.username}`), " into main",
+  );
   toast.classList.add("show");
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove("show"), 4000);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 4500);
   if (window.confetti && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    confetti({ particleCount: 140, spread: 80, origin: { y: 0.7 } });
+    confetti({ particleCount: 90, spread: 70, startVelocity: 38, ticks: 220, colors: NEON, origin: { y: 0.75 } });
   }
 }
 
@@ -85,7 +86,7 @@ async function load() {
 
   empty.hidden = participants.length > 0;
   count.textContent = participants.length;
-  latest.textContent = participants.length ? participants[participants.length - 1].name : "—";
+  latest.textContent = participants.length ? `@${participants[participants.length - 1].username}` : "—";
   firstLoad = false;
 }
 
